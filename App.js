@@ -23,16 +23,16 @@ export default function App() {
     fetchMarketData();
   }, []);
 
-  // // ref
-  // const bottomSheetModalRef = useRef(null);
+  // ref
+  const bottomSheetModalRef = useRef(null);
 
-  // // variables
-  // const snapPoints = useMemo(() => ['50%'], []);
+  // variables
+  const snapPoints = useMemo(() => ['50%'], []);
 
-  // const openModal = (item) => {
-  //   setSelectedCoinData(item);
-  //   bottomSheetModalRef.current.present();
-  // };
+  const openModal = (item) => {
+    setSelectedCoinData(item);
+    bottomSheetModalRef.current?.present();
+  };
 
   const ListHeader = () => {
     return (
@@ -47,38 +47,42 @@ export default function App() {
   };
 
   return (
-    // <GestureHandlerRootView>
-    //   <BottomSheetModalProvider>
-    <SafeAreaView className="flex-1 bg-white">
-      {data && (
-        <FlatList
-          data={data}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <ListItem
-              name={item.name}
-              symbol={item.symbol}
-              currentPrice={item.current_price}
-              priceChangePercentage7d={
-                item.price_change_percentage_7d_in_currency
-              }
-              logoUrl={item.image}
-              // onPress={() => openModal(item)}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <SafeAreaView className="flex-1 bg-white">
+          {data && (
+            <FlatList
+              data={data}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <ListItem
+                  name={item.name}
+                  symbol={item.symbol}
+                  currentPrice={item.current_price}
+                  priceChangePercentage7d={
+                    item.price_change_percentage_7d_in_currency
+                  }
+                  logoUrl={item.image}
+                  onPress={() => openModal(item)}
+                />
+              )}
+              ListHeaderComponent={<ListHeader />}
             />
           )}
-          ListHeaderComponent={<ListHeader />}
-        />
-      )}
-      <StatusBar style="auto" />
-    </SafeAreaView>
-    // <BottomSheetModal
-    //   style={styles.bottomSheet}
-    //   ref={bottomSheetModalRef}
-    //   index={0}
-    //   snapPoints={snapPoints}
-    // ></BottomSheetModal>
-    //   </BottomSheetModalProvider>
-    // </GestureHandlerRootView>
+          <StatusBar style="auto" />
+        </SafeAreaView>
+        <BottomSheetModal
+          style={styles.bottomSheet}
+          ref={bottomSheetModalRef}
+          index={0}
+          snapPoints={snapPoints}
+        >
+          <View>
+            <Text>Awesome</Text>
+          </View>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 
