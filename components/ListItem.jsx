@@ -9,7 +9,7 @@ export default function ListItem({
   onPress,
 }) {
   const styleText =
-    priceChangePercentage7d > 0 ? 'text-green-600' : 'text-red-600';
+    priceChangePercentage7d >= 0 ? 'text-green-600' : 'text-red-600';
 
   return (
     <TouchableOpacity onPress={onPress}>

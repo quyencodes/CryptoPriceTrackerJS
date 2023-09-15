@@ -9,6 +9,7 @@ import {
 
 // other file imports
 import ListItem from './components/ListItem.jsx';
+import Chart from './components/Chart.jsx';
 import { getMarketData } from './services/handlers';
 
 export default function App() {
@@ -77,9 +78,22 @@ export default function App() {
           index={0}
           snapPoints={snapPoints}
         >
-          <View>
-            <Text>Awesome</Text>
-          </View>
+          {selectedCoinData ? (
+            <Chart
+              currentPrice={selectedCoinData?.current_price}
+              symbol={selectedCoinData?.symbol}
+              logoUrl={selectedCoinData?.image}
+              name={selectedCoinData?.name}
+              priceChangePercentage7d={
+                selectedCoinData?.price_change_percentage_7d_in_currency
+              }
+              sparkline={selectedCoinData?.sparkline_in_7d}
+            />
+          ) : (
+            <View>
+              <Text>No Data</Text>
+            </View>
+          )}
         </BottomSheetModal>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
